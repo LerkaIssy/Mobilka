@@ -1,6 +1,7 @@
 package com.example.bvproject.screens
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -36,13 +37,38 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.navigation.NavHostController
+import com.example.bvproject.R
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.channels.ticker
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.flow.conflate
+import kotlinx.coroutines.flow.count
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.onCompletion
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.transform
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withTimeoutOrNull
+import java.time.LocalDateTime
+
 
 @Preview
 @Composable
 fun EmailCod(/*navHost: NavHostController*/) {
     Column(modifier = Modifier.fillMaxSize(1f)) {
-        var email: String by rememberSaveable { mutableStateOf("") }
+
 
         Column(
             modifier = Modifier
@@ -53,49 +79,103 @@ fun EmailCod(/*navHost: NavHostController*/) {
 
             Box(
                 modifier = Modifier
-                    .padding(top = 24.dp, start = 27.dp, end = 27.dp)
-                    .fillMaxWidth(1f)
+                    .padding(top = 24.dp, start = 27.dp)
+                    .clip(RoundedCornerShape(12.dp))
+                    .size(50.dp, 50.dp)
+                    .background(Color(0XFFF5F5F9))
+
             )
             {
-                CustomCode(search = email, onValueChange = {it->email=it
-                })
+                Image(
+                    painter = painterResource(id = R.drawable.ic_action_name),
+                    contentDescription = "image",
+                    contentScale = ContentScale.Crop,
+                    alpha = 0.6F,
+                    modifier = Modifier
+                        .padding(5.dp)
+                        .size(64.dp)
+                        .clip(CircleShape)
+
+                )
             }
+
+        }
+
+    }
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(bottom = 50.dp)
+        )
+        {
+            var email: String by rememberSaveable { mutableStateOf("") }
+            Text(
+                text = "Введите код из E-mail",
+                fontSize = 23.sp,
+                fontWeight= FontWeight.Bold
+            )
+            Row (modifier = Modifier.fillMaxWidth().padding(top = 20.dp,start = 30.dp, end = 30.dp), horizontalArrangement = Arrangement.SpaceEvenly){
+
+
+                    CustomCode(search = email, onValueChange = { it ->
+                        email = it
+                    })
+
+
+
+                    CustomCode(search = email, onValueChange = { it ->
+                        email = it
+                    })
+
+
+
+                    CustomCode(search = email, onValueChange = { it ->
+                        email = it
+                    })
+
+
+                    CustomCode(search = email, onValueChange = { it ->
+                        email = it
+                    })
+
+            }
+            Box(
+                Modifier
+                    .padding(start = 60.dp, end = 60.dp),
+                        contentAlignment = Alignment.Center
+
+            )
+            {
+                Text(
+                    text = "Отправить код повторно можно будет через 59 секунд",
+                    fontSize = 16.sp,
+                    color = Color(0xFF7E7E9A),
+                    modifier = Modifier.padding(top = 20.dp),
+                    textAlign = TextAlign.Center
+
+
+                )
+
+            }
+//            val tickerChannel = ticker(delayMillis = 60_000, initialDelayMillis = 0)
+//
+//            repeat(10) {
+//                tickerChannel.receive()
+//                val currentTime = LocalDateTime.now()
+//                println(currentTime)
+//            }
+            Text(
+                text = "",
+
+                fontSize = 16.sp,
+                color = Color(0xFF7E7E9A),
+                modifier = Modifier.padding(top = 20.dp)
+            )
 
         }
     }
-
-
-
-
-            Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Bottom,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(bottom = 50.dp))
-            {
-
-                Text(
-                    text = "Или войдите с помощью",
-                    fontSize = 16.sp,
-                    color = Color(0xFF7E7E9A),
-                    modifier = Modifier.padding(top = 20.dp)
-                )
-
-                Button(
-                    shape = RoundedCornerShape(10.dp),
-                    onClick = {},
-                    modifier = Modifier
-                        .fillMaxWidth(1f)
-                        .padding(top = 25.dp, start = 27.dp, end = 27.dp)
-                        .size(80.dp),
-                    border = BorderStroke(1.dp, Color.Gray),
-                    colors = ButtonDefaults.outlinedButtonColors (containerColor = Color.White, contentColor = Color.Black
-                    )
-                )
-                {
-                    Text("Войти с Яндекс", fontSize = 23.sp)
-                }
-            }
-        }
 
 
 
@@ -110,8 +190,8 @@ fun CustomCode(
 ) {
     Box(
         modifier = modifier
-            .fillMaxWidth(1f)
-            .clip(RoundedCornerShape(10.dp))
+            .size(64.dp, 64.dp)
+            .clip(RoundedCornerShape(12.dp))
 
     ) {
         TextField(
@@ -124,20 +204,38 @@ fun CustomCode(
                 disabledIndicatorColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent,
                 cursorColor = Color(0XFFEBEBEB),
+
             ),
             modifier = Modifier
                 .background(Color(0XFFF5F5F9))
-                .size(27.dp,27.dp),
+                .size(64.dp, 64.dp),
             placeholder = {
-                Text(
+                /*Text(
                     text = "example@mail.ru",
                     color = Color(0xFF7E7E9A)
-                )
+                    https://dev.to/aniketsmk/kotlin-flow-implementing-an-android-timer-ieo
+                )*/
             }
         )
 
     }
+
 }
+
+
+//fun main() = runBlocking<Unit> {
+//    val tickerChannel = ticker(delayMillis = 100, initialDelayMillis = 0) // create ticker channel
+//    var nextElement = withTimeoutOrNull(1) { tickerChannel.receive() }
+//    println("Initial element is available immediately: $nextElement")
+//}
+
+
+
+
+
+
+
+
 
 
 
