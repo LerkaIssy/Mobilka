@@ -16,7 +16,10 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AlertDialogDefaults.containerColor
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -43,6 +46,7 @@ fun CreateUser(/*navHost: NavHostController*/) {
         var flag = remember {
             mutableStateOf(false)
         }
+        var email: String by rememberSaveable { mutableStateOf("") }
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
 
@@ -98,36 +102,90 @@ Box()
 
             }
 
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth(1F)
-                    .padding( end = 30.dp, start = 24.dp),
-                contentAlignment = Alignment.CenterStart
 
 
-            )
-            {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth(1F)
+            .padding(end = 30.dp, start = 24.dp),
+        contentAlignment = Alignment.CenterStart
 
-                    Text(
-                        text = "Без карты пациента вы не сможете заказать анализы.",
-                        fontSize = 19.sp,
-                        color = Color(0xFF7E7E9A),
-                        textAlign = TextAlign.Justify
 
-                    )
-                Text(
-                    text = "В картах пациентов будут храниться результаты анализов вас и ваших близких.",
-                    fontSize = 19.sp,
-                    color = Color(0xFF7E7E9A),
-                    modifier = Modifier.padding(top = 140.dp),
-                    textAlign = TextAlign.Justify
+    )
+    {
 
-                )
-                }
+        Text(
+            text = "Без карты пациента вы не сможете заказать анализы.",
+            fontSize = 19.sp,
+            color = Color(0xFF7E7E9A),
+            textAlign = TextAlign.Justify
 
+        )
+        Text(
+            text = "В картах пациентов будут храниться результаты анализов вас и ваших близких.",
+            fontSize = 19.sp,
+            color = Color(0xFF7E7E9A),
+            modifier = Modifier.padding(top = 140.dp),
+            textAlign = TextAlign.Justify
+
+        )
+        Column (modifier = Modifier.fillMaxSize(1f)){
+        Box(
+            modifier = Modifier
+                .padding(top = 10.dp, start = 27.dp, end = 27.dp)
+                .fillMaxWidth(1f)
+        )
+        {
+            CustomName(search = email, onValueChange = { it ->
+                email = it
+            })
+        }
+    }
+}
             }
         }
     }
+
+
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun CustomName(
+    search: String,
+    modifier: Modifier = Modifier,
+    onValueChange: (String) -> Unit
+) {
+    Box(
+        modifier = modifier
+            .fillMaxWidth(1f)
+            .clip(RoundedCornerShape(10.dp))
+
+    ) {
+        TextField(
+            value = search,
+            onValueChange = onValueChange,
+            colors = TextFieldDefaults.textFieldColors(
+                containerColor = Color(0XFFF5F5F9),
+                focusedIndicatorColor = Color.Black,
+                focusedTextColor = Color.Black,
+                disabledIndicatorColor = Color.Transparent,
+                unfocusedIndicatorColor = Color.Transparent,
+                cursorColor = Color(0XFFEBEBEB),
+            ),
+            modifier = Modifier
+                .background(Color(0XFFF5F5F9))
+                .fillMaxWidth(1f)
+                .size(64.dp),
+            placeholder = {
+                Text(
+                    text = "example@mail.ru",
+                    color = Color(0xFF7E7E9A)
+                )
+            }
+        )
+
+    }
+}
 
 
 //https://github.com/StephenVinouze/SegmentedProgressBar/blob/main/app/src/main/java/com/stephenvinouze/sample/MainActivity.kt
