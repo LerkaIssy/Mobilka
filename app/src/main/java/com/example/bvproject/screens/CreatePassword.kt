@@ -56,7 +56,7 @@ fun CreatePassword(/*navHost: NavHostController*/) {
             Box(
                 modifier = Modifier
                     .fillMaxWidth(1F)
-                    .padding(top = 24.dp, end = 30.dp),
+                    .padding(top = 24.dp, end = 24.dp),
                 contentAlignment = Alignment.BottomEnd
 
 
