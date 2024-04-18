@@ -36,6 +36,7 @@ import androidx.compose.ui.unit.sp
 
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -66,7 +67,7 @@ import java.time.LocalDateTime
 
 @Preview
 @Composable
-fun EmailCod(/*navHost: NavHostController*/) {
+fun EmailCod(navHost: NavHostController) {
     Column(modifier = Modifier.fillMaxSize(1f)) {
 
 
@@ -111,6 +112,20 @@ fun EmailCod(/*navHost: NavHostController*/) {
         )
         {
             var email: String by rememberSaveable { mutableStateOf("") }
+            var email2: String by rememberSaveable { mutableStateOf("") }
+            var email3: String by rememberSaveable { mutableStateOf("") }
+            var email4: String by rememberSaveable { mutableStateOf("") }
+            val code = remember { mutableStateOf("") }
+            LaunchedEffect(email4)
+            {
+                if (email4.length == 1)
+                {
+                    navHost.navigate("CreatePassword")
+                }
+            }
+            var flag = remember {
+                mutableStateOf(false)
+            }
             Text(
                 text = "Введите код из E-mail",
                 fontSize = 23.sp,
@@ -125,19 +140,19 @@ fun EmailCod(/*navHost: NavHostController*/) {
 
 
 
-                    CustomCode(search = email, onValueChange = { it ->
-                        email = it
+                    CustomCode2(search = email2, onValueChange = { it ->
+                        email2 = it
                     })
 
 
 
-                    CustomCode(search = email, onValueChange = { it ->
-                        email = it
+                    CustomCode3(search = email3, onValueChange = { it ->
+                        email3 = it
                     })
 
 
-                    CustomCode(search = email, onValueChange = { it ->
-                        email = it
+                    CustomCode4(search = email4, onValueChange = { it ->
+                        email4 = it
                     })
 
             }
@@ -159,6 +174,8 @@ fun EmailCod(/*navHost: NavHostController*/) {
                 )
 
             }
+
+
 //            val tickerChannel = ticker(delayMillis = 60_000, initialDelayMillis = 0)
 //
 //            repeat(10) {
@@ -221,7 +238,126 @@ fun CustomCode(
     }
 
 }
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun CustomCode2(
+    search: String,
+    modifier: Modifier = Modifier,
+    onValueChange: (String) -> Unit
+) {
+    Box(
+        modifier = modifier
+            .size(64.dp, 64.dp)
+            .clip(RoundedCornerShape(12.dp))
 
+    ) {
+        TextField(
+            value = search,
+            onValueChange = onValueChange,
+            colors = TextFieldDefaults.textFieldColors(
+                containerColor = Color(0XFFF5F5F9),
+                focusedIndicatorColor = Color.Black,
+                focusedTextColor = Color.Black,
+                disabledIndicatorColor = Color.Transparent,
+                unfocusedIndicatorColor = Color.Transparent,
+                cursorColor = Color(0XFFEBEBEB),
+
+                ),
+            modifier = Modifier
+                .background(Color(0XFFF5F5F9))
+                .size(64.dp, 64.dp),
+            placeholder = {
+                /*Text(
+                    text = "example@mail.ru",
+                    color = Color(0xFF7E7E9A)
+                    https://dev.to/aniketsmk/kotlin-flow-implementing-an-android-timer-ieo
+                )*/
+            }
+        )
+
+    }
+
+}
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun CustomCode3(
+    search: String,
+    modifier: Modifier = Modifier,
+    onValueChange: (String) -> Unit
+) {
+    Box(
+        modifier = modifier
+            .size(64.dp, 64.dp)
+            .clip(RoundedCornerShape(12.dp))
+
+    ) {
+        TextField(
+            value = search,
+            onValueChange = onValueChange,
+            colors = TextFieldDefaults.textFieldColors(
+                containerColor = Color(0XFFF5F5F9),
+                focusedIndicatorColor = Color.Black,
+                focusedTextColor = Color.Black,
+                disabledIndicatorColor = Color.Transparent,
+                unfocusedIndicatorColor = Color.Transparent,
+                cursorColor = Color(0XFFEBEBEB),
+
+                ),
+            modifier = Modifier
+                .background(Color(0XFFF5F5F9))
+                .size(64.dp, 64.dp),
+            placeholder = {
+                /*Text(
+                    text = "example@mail.ru",
+                    color = Color(0xFF7E7E9A)
+                    https://dev.to/aniketsmk/kotlin-flow-implementing-an-android-timer-ieo
+                )*/
+            }
+        )
+
+    }
+
+}
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun CustomCode4(
+    search: String,
+    modifier: Modifier = Modifier,
+    onValueChange: (String) -> Unit
+) {
+    Box(
+        modifier = modifier
+            .size(64.dp, 64.dp)
+            .clip(RoundedCornerShape(12.dp))
+
+    ) {
+        TextField(
+            value = search,
+            onValueChange = onValueChange,
+            colors = TextFieldDefaults.textFieldColors(
+                containerColor = Color(0XFFF5F5F9),
+                focusedIndicatorColor = Color.Black,
+                focusedTextColor = Color.Black,
+                disabledIndicatorColor = Color.Transparent,
+                unfocusedIndicatorColor = Color.Transparent,
+                cursorColor = Color(0XFFEBEBEB),
+
+                ),
+            modifier = Modifier
+                .background(Color(0XFFF5F5F9))
+                .size(64.dp, 64.dp),
+            placeholder = {
+                /*Text(
+                    text = "example@mail.ru",
+                    color = Color(0xFF7E7E9A)
+                    https://dev.to/aniketsmk/kotlin-flow-implementing-an-android-timer-ieo
+                )*/
+            }
+        )
+
+    }
+
+}
 
 //fun main() = runBlocking<Unit> {
 //    val tickerChannel = ticker(delayMillis = 100, initialDelayMillis = 0) // create ticker channel
