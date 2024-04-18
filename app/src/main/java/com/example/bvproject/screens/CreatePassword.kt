@@ -13,11 +13,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material3.AlertDialogDefaults.containerColor
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -29,19 +31,26 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.example.bvproject.R
 
 @Preview
 @Composable
-fun CreatePassword(/*navHost: NavHostController*/) {
+fun CreatePassword(navHost: NavHostController) {
     Column(modifier = Modifier.fillMaxSize(1f)) {
-        var flag = remember {
-            mutableStateOf(false)
+        val code = remember { mutableStateOf("") }
+        LaunchedEffect(code.value)
+        {
+            if (code.value.length == 4)
+            {
+                navHost.navigate("CreateUser")
+            }
         }
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -62,13 +71,19 @@ fun CreatePassword(/*navHost: NavHostController*/) {
 
             )
             {
-                Text(
+                ClickableText(
+                    text = AnnotatedString("Пропустить") ,
+                    onClick = {navHost.navigate("CreateUser")},
+
+                )
+                /*Text(
+                    onClick = {},
                     text = "Пропустить",
                     fontSize = 20.sp,
                     textAlign = TextAlign.Center,
                     color = Color(0xFF1A6FEE),
 
-                )
+                )*/
             }
             Box(
                 modifier = Modifier
