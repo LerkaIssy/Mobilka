@@ -40,7 +40,7 @@ import androidx.navigation.NavHostController
 
 @Preview
 @Composable
-fun Login(/*navHost: NavHostController*/) {
+fun Login(navHost: NavHostController) {
     Column(modifier = Modifier.fillMaxSize(1f)) {
         var email: String by rememberSaveable { mutableStateOf("") }
         var flag = remember {
@@ -111,7 +111,7 @@ else ButtonDefaults.buttonColors(
                 Button(
 
                     shape = RoundedCornerShape(10.dp),
-                    onClick = {},
+                    onClick = {navHost.navigate("EmailCod")},
                     modifier = Modifier
                         .fillMaxWidth(1f)
                         .size(75.dp),
