@@ -49,11 +49,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.toSize
+import androidx.navigation.NavHostController
 import com.example.bvproject.R
 
 @Preview
 @Composable
-fun CreateUser(/*navHost: NavHostController*/) {
+fun CreateUser(navHost: NavHostController) {
     Column(modifier = Modifier.fillMaxSize(1f)) {
         val context = LocalContext.current
         val sex = arrayOf("Женский", "Мужской")
