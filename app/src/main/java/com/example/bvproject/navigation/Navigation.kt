@@ -4,6 +4,8 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.bvproject.screens.CreatePassword
+import com.example.bvproject.screens.CreateUser
 import com.example.bvproject.screens.EmailCod
 import com.example.bvproject.screens.Login
 import com.example.bvproject.screens.SplashScreen
@@ -21,10 +23,16 @@ fun Navigation() {
             SplashScreen(navController)
         }
         composable("logInScreen"){
-            Login(/*navController*/)
+            Login(navController)
         }
         composable("EmailCod"){
-            EmailCod(/*navController*/)
+            EmailCod(navController)
+        }
+        composable("CreatePassword"){
+            CreatePassword(navController)
+        }
+        composable("CreateUser"){
+            CreateUser(navController)
         }
     }
 }
